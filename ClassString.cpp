@@ -87,6 +87,23 @@ void CraftString::print()
     std::cout << str << std::endl;
 }
 
+ostream & operator<<(ostream & out, const CraftString & str)
+{
+    out << str.str;
+    return out;
+}
+
+istream & operator>>(istream & inp, CraftString & str)
+{
+    char temp[CraftString::CINLIM];
+    inp.get(temp, CraftString::CINLIM);
+    if (inp)
+        str = temp;
+    while (inp && inp.get() != '\n')
+        continue;
+    return inp;
+}
+
 CraftString::~CraftString()
 {
     delete[] str;
