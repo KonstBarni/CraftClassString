@@ -1,15 +1,35 @@
 #include <iostream>
 #include "Functions.h"
+#include "Stack.h"
 #include <cstring>
 
-// char* getStr()
-// {
-//     char *inpStr[80];
-//     char *stroka =new char[100];
+CraftString getStr()
+{
+    CraftString inpStr;
 
-//     // std::cout << "Input the string: ";
-//     // std::cin.getline(stroka, strlen(stroka));
-//     // //std::cin.read(stroka, strlen(stroka));
+    std::cout << "Input the string: ";
+    std::cin >> inpStr;
 
-//     return *inpStr;
-// }
+    return inpStr;
+}
+
+void reverse(CraftString& str)
+{
+    Stack rev;
+    char *s = new char[strlen(str.String())];
+    for(int i = 0; i < strlen(str.String()); i++)
+    {
+        s[i] = str[i];
+    }
+
+    char *p = strtok(s, ", ");
+    while(p != nullptr)
+    {
+        std::cout << p << '\n';
+        CraftString word(p);
+        rev.push(word);
+        p = strtok(nullptr, ", ");
+    }
+
+    delete[] s;
+}

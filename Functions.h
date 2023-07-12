@@ -1,3 +1,5 @@
 #pragma once
+#include "ClassString.h"
 
-char* getStr();
+CraftString getStr();
+void reverse(CraftString& str);

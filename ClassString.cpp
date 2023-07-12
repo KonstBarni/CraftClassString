@@ -19,15 +19,18 @@ CraftString::CraftString(char* str)
     this->str[len + 1] = '\0';
 }
 
+// CraftString::CraftString(int size, const CraftString& other)
+// {
+//     len = size;
+//     this->str = new char[len + 1];
+//     std::strncpy(this->str, other.str, size);
+//     this->str[len + 1] = '\0';
+// }
+
 CraftString::CraftString(const CraftString& other)
 {
-    len = strlen(other.str);
-    this->str = new char[len + 1];
-
-    for(int i{0}; i < len; i++)
-        this->str[i] = other.str[i];
-    
-    this->str[len + 1] = '\0';
+    len = other.len;
+    this->str = other.str;
 }
 
 CraftString::CraftString(CraftString&& other)
@@ -39,42 +42,76 @@ CraftString::CraftString(CraftString&& other)
 
 CraftString &CraftString::operator =(const CraftString& other)
 {
-    if(this->str != nullptr)
-        delete[] str;
+    if (this == &other)
+        return *this;
 
-    len = strlen(other.str);
-    this->str = new char[len + 1];
+    len = other.len;
+    this->str = other.str;
+    return *this;
 
-    for(int i{0}; i < len; i++)
-        this->str[i] = other.str[i];
-    
-    this->str[len + 1] = '\0';
+}
 
+CraftString &CraftString::operator =(const char * st)
+{
+    delete[] str;
+    len = std::strlen(st);
+    str = new char[len + 1];
+    std::strcpy(str, st);
     return *this;
 }
 
 CraftString CraftString::operator +(const CraftString& other)
 {
     CraftString plusStr;
+    delete[] plusStr.str;
 
-    plusStr.str = new char[strlen(this->str) + strlen(other.str) +1];
+    plusStr.len = this->len + other.len;
+    plusStr.str = new char[this->len + other.len +1];
 
-    int i = 0;
-    for(;i < strlen(this->str); i++)
-        plusStr.str[i] = this->str[i];
-
-    for(int j = 0; j < strlen(other.str); j++, i++)
-        plusStr.str[i] = other.str[j];
-
-    plusStr.str[i+1] = '\0';
-
-    plusStr.len = strlen(this->str) + strlen(other.str);
+    std::strcpy(plusStr.str, this->str);
+    std::strcpy(plusStr.str + this->len, other.str);
     return plusStr;
+}
+
+CraftString CraftString::operator +=(const CraftString& other)
+{
+    CraftString temp;                        
+ 
+    temp.len = strlen(this->str) + other.len;    
+    temp.str = new char[temp.len + 1];            
+    
+    std::strcpy(temp.str, std::strcat(this->str, other.str));
+
+    return temp;
+
+}
+
+CraftString CraftString::operator +=(const char& symb)
+{
+    CraftString temp;
+
+    temp.len = this->len + 1;
+    temp.str = new char[temp.len + 1];
+
+    std::strcpy(temp.str, this->str);
+    temp[temp.len-1] = symb;
+    temp[temp.len] = '\0';
+    delete[] this->str;
+    this->str = new char[temp.len];
+    this->len = temp.len;
+    std::strcpy(this->str, temp.str);
+
+    return *this;
 }
 
 char &CraftString::operator[](int index)
 {
     return this->str[index];
+}
+
+char* CraftString::String()
+{
+    return str;
 }
 
 int CraftString::Lengh()
@@ -87,9 +124,9 @@ void CraftString::print()
     std::cout << str << std::endl;
 }
 
-ostream & operator<<(ostream & out, const CraftString & str)
+ostream & operator<<(ostream & out, const CraftString & st)
 {
-    out << str.str;
+    out << st.str;
     return out;
 }
 

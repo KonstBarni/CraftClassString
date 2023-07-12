@@ -9,12 +9,17 @@ public:
     CraftString();
     CraftString(char* str);
     CraftString(const CraftString& other);
+    //CraftString(int size, const CraftString& other);
     CraftString(CraftString&& other);
 
     CraftString& operator =(const CraftString& other);
+    CraftString& operator =(const char * st);
     CraftString operator +(const CraftString& other);
+    CraftString operator +=(const CraftString& other);
+    CraftString operator +=(const char& symb);
     char &operator [](int index);
 
+    char* String();
     int Lengh();
     void print();
 
