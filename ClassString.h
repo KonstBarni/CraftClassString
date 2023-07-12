@@ -9,7 +9,6 @@ public:
     CraftString();
     CraftString(char* str);
     CraftString(const CraftString& other);
-    //CraftString(int size, const CraftString& other);
     CraftString(CraftString&& other);
 
     CraftString& operator =(const CraftString& other);
@@ -19,8 +18,8 @@ public:
     CraftString operator +=(const char& symb);
     char &operator [](int index);
 
-    char* String();
-    int Lengh();
+    char* getStr();
+    int getLengh();
     void print();
 
     friend ostream & operator<<(ostream & out, const CraftString &str);
@@ -29,8 +28,9 @@ public:
     ~CraftString();
     
 private:
-    char* str;
+    
     int len;
+    char* str;
     static const int CINLIM = 100;
 
 };

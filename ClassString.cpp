@@ -2,35 +2,19 @@
 #include <cstring>
 #include "ClassString.h"
 
-CraftString::CraftString()
-{
-    str = nullptr;
-    len = 0;
-}
+CraftString::CraftString(): len(0), str(nullptr){}
 
-CraftString::CraftString(char* str)
+CraftString::CraftString(char* str): len(strlen(str))
 {
-    len = strlen(str);
     this->str = new char[len + 1];
-
-    for(int i{0}; i < len; i++)
-        this->str[i] = str[i];
-    
-    this->str[len + 1] = '\0';
+    std::strcpy(this->str, str);
 }
-
-// CraftString::CraftString(int size, const CraftString& other)
-// {
-//     len = size;
-//     this->str = new char[len + 1];
-//     std::strncpy(this->str, other.str, size);
-//     this->str[len + 1] = '\0';
-// }
 
 CraftString::CraftString(const CraftString& other)
 {
-    len = other.len;
-    this->str = other.str;
+    len = strlen(other.str);
+    this->str = new char[len + 1];
+    std::strcpy(this->str, other.str);
 }
 
 CraftString::CraftString(CraftString&& other)
@@ -46,9 +30,9 @@ CraftString &CraftString::operator =(const CraftString& other)
         return *this;
 
     len = other.len;
-    this->str = other.str;
+    str = new char[len + 1];
+    std::strcpy(str, other.str);
     return *this;
-
 }
 
 CraftString &CraftString::operator =(const char * st)
@@ -62,37 +46,31 @@ CraftString &CraftString::operator =(const char * st)
 
 CraftString CraftString::operator +(const CraftString& other)
 {
-    CraftString plusStr;
-    delete[] plusStr.str;
-
-    plusStr.len = this->len + other.len;
-    plusStr.str = new char[this->len + other.len +1];
-
-    std::strcpy(plusStr.str, this->str);
-    std::strcpy(plusStr.str + this->len, other.str);
-    return plusStr;
+    char* temp = new char[this->len + other.len +1];
+    std::strcpy(temp, this->str);
+    std::strcat(temp, other.str);
+    CraftString res(temp);
+    delete[] temp;
+    return res;
 }
 
 CraftString CraftString::operator +=(const CraftString& other)
-{
-    CraftString temp;                        
- 
-    temp.len = strlen(this->str) + other.len;    
-    temp.str = new char[temp.len + 1];            
-    
-    std::strcpy(temp.str, std::strcat(this->str, other.str));
-
+{   
+    CraftString temp;
+    temp.str = new char [this->len + other.len +1];                    
+    // char* temp = new char[this->len + other.len +1];
+    std::strcpy(temp.str, this->str);    
+    std::strcat(temp.str, other.str);
+    // CraftString res(temp);
+    // delete[] temp;            
     return temp;
-
 }
 
 CraftString CraftString::operator +=(const char& symb)
 {
     CraftString temp;
-
     temp.len = this->len + 1;
     temp.str = new char[temp.len + 1];
-
     std::strcpy(temp.str, this->str);
     temp[temp.len-1] = symb;
     temp[temp.len] = '\0';
@@ -100,21 +78,23 @@ CraftString CraftString::operator +=(const char& symb)
     this->str = new char[temp.len];
     this->len = temp.len;
     std::strcpy(this->str, temp.str);
-
     return *this;
 }
 
 char &CraftString::operator[](int index)
 {
+    if(index < 0 || index >= this->len)
+        std::cout <<"шncorrect element index" <<'\n';
+
     return this->str[index];
 }
 
-char* CraftString::String()
+char* CraftString::getStr()
 {
     return str;
 }
 
-int CraftString::Lengh()
+int CraftString::getLengh()
 {
     return len;
 }

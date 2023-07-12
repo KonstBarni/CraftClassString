@@ -1,7 +1,7 @@
 #pragma once
 #include "ClassString.h"
 
-#define MAX 5
+#define MAX 10      //max stack size
 
 class Stack
 {
@@ -11,15 +11,14 @@ private:
     int num_top;
 
 public:
+
     CraftString* st_items[MAX];
-    
-    Stack(): num_top(-1), st_top(){}
+    Stack(): st_top(), num_top(-1){}
     bool push(CraftString& st);
     CraftString pop();
     CraftString peek();
     bool isFull();
     bool isEmpty();
     Stack& operator =(Stack& other);
-    //~Stack();
-    
+    ~Stack();    
 };

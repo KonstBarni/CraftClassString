@@ -1,18 +1,15 @@
 #include <iostream>
 #include "ClassString.h"
 #include "Functions.h"
+#include "Stack.h"
 
 int main()
 {
+    setlocale(LC_ALL, "Russian");
 
-    CraftString st("numi kumi kaka");
-    CraftString st1("POPO");
+    CraftString st = inputStr(); 
 
-
-    st3.print();
-
-    //reverse(st);
-
+    reverse(st);
 
     return 0;
 }

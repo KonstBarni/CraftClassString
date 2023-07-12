@@ -63,7 +63,7 @@ Stack& Stack::operator =(Stack& other)
     return *this;
 }
 
-// Stack::~Stack()
-// {
-//     delete[] stack;
-// }
+Stack::~Stack()
+{
+
+}

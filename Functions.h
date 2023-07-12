@@ -1,5 +1,6 @@
 #pragma once
 #include "ClassString.h"
 
-CraftString getStr();
-void reverse(CraftString& str);
+CraftString inputStr();             //функция ввода слов
+
+void reverse(CraftString& str);     //функция реверса порядка слов

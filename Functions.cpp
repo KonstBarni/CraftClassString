@@ -3,11 +3,11 @@
 #include "Stack.h"
 #include <cstring>
 
-CraftString getStr()
+CraftString inputStr()
 {
     CraftString inpStr;
 
-    std::cout << "Input the string: ";
+    std::cout << "Введите слова через пробел: ";
     std::cin >> inpStr;
 
     return inpStr;
@@ -15,21 +15,34 @@ CraftString getStr()
 
 void reverse(CraftString& str)
 {
-    Stack rev;
-    char *s = new char[strlen(str.String())];
-    for(int i = 0; i < strlen(str.String()); i++)
-    {
-        s[i] = str[i];
-    }
+    //Stack rev;
 
-    char *p = strtok(s, ", ");
+    char* sp[10];
+    int i = 0, count = 0;
+
+    char *p = strtok(str.getStr(), ", ");
+
     while(p != nullptr)
     {
-        std::cout << p << '\n';
-        CraftString word(p);
-        rev.push(word);
+        sp[i] = p;
+        i++;
+        count++;
+        //CraftString word(p);
+        //rev.push(word);               //ошибка пямяти
         p = strtok(nullptr, ", ");
     }
 
-    delete[] s;
+    std::cout << "Реверсивный порядок слов: ";
+
+    while(count-- != 0)
+    {
+        if(count)
+        {
+            std::cout << sp[count] << " ";
+        }
+        else
+        {
+            std::cout << sp[count] << std::endl;
+        }
+    }
 }
